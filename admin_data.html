@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+{% block title %}All Saved Data | BrandBoost Admin{% endblock %}
+
+{% block content %}
+<section class="dashboard-head">
+    <div>
+        <div class="eyebrow">DATABASE RECORDS</div>
+        <h1>All saved <span>data.</span></h1>
+        <p>Every tool submission and order stored in SQLite, with customer details where available.</p>
+    </div>
+    <a class="btn secondary" href="{{ url_for('admin') }}">← Admin Overview</a>
+</section>
+
+<div class="admin-data-nav">
+    <a href="#orders">Orders ({{ data['orders']|length }})</a>
+    <a href="#audits">Brand Audits ({{ data['audits']|length }})</a>
+    <a href="#pulse">Brand Pulse ({{ data['simulations']|length }})</a>
+    <a href="#dna">Brand DNA ({{ data['dna_checks']|length }})</a>
+    <a href="#mood">Brand Mood ({{ data['mood_checks']|length }})</a>
+    <a href="#messages">Messages ({{ data['chats']|length }})</a>
+</div>
+
+<section class="panel data-panel" id="orders">
+    <div class="panel-head">
+        <h2>Orders and Payment Records</h2>
+        <span class="pill">{{ data['orders']|length }} records</span>
+    </div>
+    {% if data['orders'] %}
+        <div class="table-scroll">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Customer</th><th>Package</th><th>Amount</th>
+                        <th>Status</th><th>Method</th><th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data['orders'] %}
+                        <tr>
+                            <td>#{{ row['id'] }}</td>
+                            <td>{{ row['user_name'] or 'Guest' }}<small>{{ row['user_email'] or '' }}</small></td>
+                            <td>{{ row['package_name'] }}</td>
+                            <td>₹{{ row['amount'] }}</td>
+                            <td><span class="pill">{{ row['status'] }}</span></td>
+                            <td>{{ row['payment_method'] or '—' }}</td>
+                            <td>{{ row['created_at'][:16].replace('T', ' ') if row['created_at'] else '—' }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="empty">No orders have been stored yet.</p>
+    {% endif %}
+</section>
+
+<section class="panel data-panel" id="audits">
+    <div class="panel-head">
+        <h2>Free Brand Audits</h2>
+        <span class="pill">{{ data['audits']|length }} records</span>
+    </div>
+    {% if data['audits'] %}
+        <div class="table-scroll">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Customer</th><th>Brand</th><th>Platform</th><th>Goal</th>
+                        <th>Presence</th><th>Score</th><th>Recommendation</th><th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data['audits'] %}
+                        <tr>
+                            <td>{{ row['user_name'] or 'Guest' }}<small>{{ row['user_email'] or '' }}</small></td>
+                            <td>{{ row['brand_name'] }}</td>
+                            <td>{{ row['platform'] }}</td>
+                            <td>{{ row['goal'] }}</td>
+                            <td>{{ row['presence'] }}</td>
+                            <td>{{ row['score'] }}/100</td>
+                            <td>{{ row['recommendation'] }}</td>
+                            <td>{{ row['created_at'][:16].replace('T', ' ') if row['created_at'] else '—' }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="empty">No audit records yet.</p>
+    {% endif %}
+</section>
+
+<section class="panel data-panel" id="pulse">
+    <div class="panel-head">
+        <h2>Brand Pulse Simulations</h2>
+        <span class="pill">{{ data['simulations']|length }} records</span>
+    </div>
+    {% if data['simulations'] %}
+        <div class="table-scroll">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Customer</th><th>Platform / Tone</th><th>Goal</th><th>Content Idea</th>
+                        <th>Attention</th><th>Trust</th><th>Conversion</th><th>Risk</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data['simulations'] %}
+                        <tr>
+                            <td>{{ row['user_name'] or 'Guest' }}<small>{{ row['user_email'] or '' }}</small></td>
+                            <td>{{ row['platform'] }} / {{ row['tone'] }}</td>
+                            <td>{{ row['goal'] }}</td>
+                            <td>{{ row['idea'] }}</td>
+                            <td>{{ row['attention'] }}</td>
+                            <td>{{ row['trust'] }}</td>
+                            <td>{{ row['conversion'] }}</td>
+                            <td>{{ row['risk'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="empty">No Pulse submissions yet.</p>
+    {% endif %}
+</section>
+
+<section class="panel data-panel" id="dna">
+    <div class="panel-head">
+        <h2>Brand DNA Checks</h2>
+        <span class="pill">{{ data['dna_checks']|length }} records</span>
+    </div>
+    {% if data['dna_checks'] %}
+        <div class="table-scroll">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Customer</th><th>Brand</th><th>Tone</th><th>Colors</th>
+                        <th>Keywords</th><th>Idea</th><th>Score</th><th>Recommendation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data['dna_checks'] %}
+                        <tr>
+                            <td>{{ row['user_name'] or 'Guest' }}<small>{{ row['user_email'] or '' }}</small></td>
+                            <td>{{ row['brand_name'] }}</td>
+                            <td>{{ row['tone'] }}</td>
+                            <td>{{ row['colors'] }}</td>
+                            <td>{{ row['keywords'] }}</td>
+                            <td>{{ row['idea'] }}</td>
+                            <td>{{ row['score'] }}/100</td>
+                            <td>{{ row['recommendation'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="empty">No Brand DNA submissions yet.</p>
+    {% endif %}
+</section>
+
+<section class="panel data-panel" id="mood">
+    <div class="panel-head">
+        <h2>Brand Mood Studio</h2>
+        <span class="pill">{{ data['mood_checks']|length }} records</span>
+    </div>
+    {% if data['mood_checks'] %}
+        <div class="table-scroll">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Customer</th><th>Brand</th><th>Mood</th><th>Goal</th>
+                        <th>Audience</th><th>Score</th><th>Style Direction</th><th>Content Direction</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data['mood_checks'] %}
+                        <tr>
+                            <td>{{ row['user_name'] or 'Guest' }}<small>{{ row['user_email'] or '' }}</small></td>
+                            <td>{{ row['brand_name'] }}</td>
+                            <td>{{ row['mood'] }}</td>
+                            <td>{{ row['goal'] }}</td>
+                            <td>{{ row['audience'] }}</td>
+                            <td>{{ row['score'] }}/100</td>
+                            <td>{{ row['style_direction'] }}</td>
+                            <td>{{ row['content_direction'] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="empty">No Brand Mood submissions yet.</p>
+    {% endif %}
+</section>
+
+<section class="panel data-panel" id="messages">
+    <div class="panel-head">
+        <h2>Customer Messages</h2>
+        <span class="pill">{{ data['chats']|length }} records</span>
+    </div>
+    {% if data['chats'] %}
+        <div class="table-scroll">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Customer</th><th>Email</th><th>Message</th>
+                        <th>Reply</th><th>Status</th><th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data['chats'] %}
+                        <tr>
+                            <td>{{ row['name'] }}</td>
+                            <td>{{ row['email'] }}</td>
+                            <td>{{ row['message'] }}</td>
+                            <td>{{ row['reply'] or 'Not replied' }}</td>
+                            <td>{{ row['status'] }}</td>
+                            <td>{{ row['created_at'][:16].replace('T', ' ') if row['created_at'] else '—' }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="empty">No messages yet.</p>
+    {% endif %}
+</section>
+{% endblock %}

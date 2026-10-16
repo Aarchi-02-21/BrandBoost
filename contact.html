@@ -1,0 +1,41 @@
+{% extends 'base.html' %}{% block title %}Contact | BrandBoost{% endblock %}{% block content %}<section class="page-head compact">
+    <div class="eyebrow">LET'S TALK</div>
+    <h1>Have a question? <span>Chat with us.</span>
+    </h1>
+<p>Send a message and it will appear in the BrandBoost support dashboard.</p>
+</section>
+<section class="contact-grid">
+    <form class="tool-card" method="post">
+        <label>Name<input name="name" required value="{{current_user['name'] if current_user else ''}}">
+        </label>
+    <label>Email<input type="email" name="email" required value="{{current_user['email'] if current_user else ''}}">
+    </label>
+<label>Message<textarea name="message" required placeholder="Tell us what you need...">
+    </textarea>
+</label>
+<button class="btn full">Send Message →</button>
+</form>
+<div class="contact-info">
+    <div class="info-box">
+        <span>◉</span>
+        <div>
+            <b>Fast support</b>
+            <p>Messages are stored in the database and can be replied to from Admin.</p>
+        </div>
+</div>
+<div class="info-box">
+    <span>◇</span>
+    <div>
+        <b>Free first step</b>
+        <p>Start with the audit before buying a package.</p>
+    </div>
+</div>
+<div class="info-box">
+    <span>✦</span>
+    <div>
+        <b>Student-friendly</b>
+        <p>Packages start at ₹399 and focus on practical value.</p>
+    </div>
+</div>
+</div>
+</section>{% endblock %}

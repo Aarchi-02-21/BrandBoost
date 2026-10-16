@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block title %}Brand Mood Studio | BrandBoost{% endblock %}
+{% block content %}
+<section class="page-head compact mood-head">
+    <div class="eyebrow">NEW • BRAND MOOD STUDIO</div>
+    <h1>Give your brand a <span>personality.</span></h1>
+    <p>Choose the feeling you want customers to remember. BrandBoost turns it into a simple visual and content direction.</p>
+</section>
+
+<section class="mood-layout">
+    <form class="tool-card mood-form" method="post">
+        <div class="form-title">
+            <span class="mood-icon">✦</span>
+            <div>
+                <h2>Build your brand mood</h2>
+                <p>Pick the personality that fits your business.</p>
+            </div>
+        </div>
+
+        <label>Brand name
+            <input name="brand_name" required placeholder="e.g. Green Heaven">
+        </label>
+
+        <label>How should your brand feel?
+            <select name="mood" required>
+                <option value="">Choose a mood</option>
+                <option>Professional</option>
+                <option>Luxury</option>
+                <option>Friendly</option>
+                <option>Youthful</option>
+                <option>Minimal</option>
+                <option>Bold</option>
+            </select>
+        </label>
+
+        <label>Main goal
+            <select name="goal" required>
+                <option value="">Choose a goal</option>
+                <option>Awareness</option>
+                <option>Engagement</option>
+                <option>Leads</option>
+                <option>Sales</option>
+            </select>
+        </label>
+
+        <label>Target audience
+            <textarea name="audience" required placeholder="Who should connect with this brand?"></textarea>
+        </label>
+
+        <button class="btn full">Generate Brand Mood ✦</button>
+    </form>
+
+    <div class="mood-preview">
+        {% if result %}
+        <div class="mood-result">
+            <div class="result-top">
+                <div>
+                    <div class="eyebrow">MOOD PROFILE</div>
+                    <h2>{{ result.brand }}</h2>
+                    <span class="mood-chip">{{ result.mood }}</span>
+                </div>
+                <div class="mood-score">
+                    <strong>{{ result.score }}</strong>
+                    <small>/100</small>
+                </div>
+            </div>
+
+            <div class="mood-bars">
+                <div>
+                    <span>Brand clarity</span>
+                    <b><i style="width: {{ result.score }}%"></i></b>
+                </div>
+                <div>
+                    <span>Audience fit</span>
+                    <b><i style="width: {{ [result.score - 3, 0] | max }}%"></i></b>
+                </div>
+                <div>
+                    <span>Content direction</span>
+                    <b><i style="width: {{ [result.score + 2, 100] | min }}%"></i></b>
+                </div>
+            </div>
+
+            <div class="mood-columns">
+                <article>
+                    <span>VISUAL DIRECTION</span>
+                    <p>{{ result.style }}</p>
+                </article>
+                <article>
+                    <span>CONTENT DIRECTION</span>
+                    <p>{{ result.content }}</p>
+                </article>
+            </div>
+
+            <div class="mood-next">
+                <b>Next step</b>
+                <p>Take this personality into Brand Pulse and test your next content idea.</p>
+                <a class="btn" href="{{ url_for('pulse') }}">Open Brand Pulse →</a>
+            </div>
+        </div>
+        {% else %}
+        <div class="mood-empty">
+            <div class="mood-orbit">
+                <span>✦</span>
+                <i></i>
+                <b></b>
+            </div>
+            <div class="eyebrow">LIVE PREVIEW</div>
+            <h2>Your brand personality appears here.</h2>
+            <p>Pick a mood and BrandBoost will create a practical direction you can use for posts, visuals and campaigns.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="section mini-note">
+    <h2>Why this feature is different</h2>
+    <p>Most social-media sites jump straight to posts and advertisements. Brand Mood Studio starts one step earlier: it helps a customer define how the brand should feel, then converts that choice into a repeatable visual and content direction.</p>
+</section>
+{% endblock %}

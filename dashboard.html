@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% block title %}Customer Dashboard | BrandBoost{% endblock %}
+
+{% block content %}
+<section class="dashboard-head">
+    <div>
+        <div class="eyebrow">CUSTOMER DASHBOARD</div>
+        <h1>Hi, <span>{{ user['name'].split()[0] }}.</span></h1>
+        <p>Manage your BrandBoost journey and revisit the results you have saved.</p>
+    </div>
+    <a class="btn" href="{{ url_for('pricing') }}">Browse Packages</a>
+</section>
+
+{% if trial %}
+    <div class="trial-banner">
+        <div>
+            <b>{% if trial.active %}Your free trial is active{% else %}Your free trial has ended{% endif %}</b>
+            <p>
+                {% if trial.active %}
+                    {{ trial.remaining }} day(s) remaining. Your starter bonus is unlocked.
+                {% else %}
+                    Choose a package to continue.
+                {% endif %}
+            </p>
+        </div>
+        <a href="{{ url_for('pricing') }}" class="btn secondary">View Plans</a>
+    </div>
+{% else %}
+    <div class="trial-banner">
+        <div>
+            <b>🎁 7-Day Free Trial</b>
+            <p>Try BrandBoost with a starter audit and 3 content ideas.</p>
+        </div>
+        <form method="post" action="{{ url_for('trial') }}">
+            <button class="btn" type="submit">Activate Free Trial</button>
+        </form>
+    </div>
+{% endif %}
+
+<div class="dash-grid">
+    <section class="panel">
+        <div class="panel-head">
+            <h2>Your Orders</h2>
+            <a href="{{ url_for('pricing') }}">+ New</a>
+        </div>
+        {% for order in orders %}
+            <div class="list-row">
+                <div>
+                    <b>{{ order['package_name'] }}</b>
+                    <small>{{ order['created_at'][:16].replace('T', ' ') if order['created_at'] else 'Date unavailable' }}</small>
+                    <small>{{ order['payment_method'] or 'Payment method not selected' }}</small>
+                </div>
+                <span class="pill">{{ order['status'] }} · ₹{{ order['amount'] }}</span>
+            </div>
+        {% else %}
+            <div class="empty">No package selected yet.</div>
+        {% endfor %}
+    </section>
+
+    <section class="panel">
+        <div class="panel-head">
+            <h2>Your Tools</h2>
+        </div>
+        <div class="tool-links">
+            <a href="{{ url_for('audit') }}">◈ Free Audit</a>
+            <a href="{{ url_for('pulse') }}">✦ Brand Pulse</a>
+            <a href="{{ url_for('dna') }}">◎ Brand DNA</a>
+            <a href="{{ url_for('mood') }}">✦ Brand Mood</a>
+        </div>
+    </section>
+
+    <section class="panel wide">
+        <div class="panel-head">
+            <h2>Customer Chat</h2>
+            <span class="muted">Admin replies appear here</span>
+        </div>
+        <form class="chat-form" method="post" action="{{ url_for('chat') }}">
+            <textarea name="message" required placeholder="Type your message to BrandBoost..."></textarea>
+            <button class="btn" type="submit">Send Message</button>
+        </form>
+
+        {% for message in chats %}
+            <div class="chat-msg">
+                <b>You</b>
+                <p>{{ message['message'] }}</p>
+                <small>{{ message['created_at'][:16].replace('T', ' ') if message['created_at'] else '' }}</small>
+                {% if message['reply'] %}
+                    <div class="reply">
+                        <b>BrandBoost</b>
+                        <p>{{ message['reply'] }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="empty">No messages yet.</div>
+        {% endfor %}
+    </section>
+
+    <section class="panel">
+        <div class="panel-head">
+            <h2>All Brand Audits</h2>
+            <a href="{{ url_for('audit') }}">Run audit</a>
+        </div>
+        {% for audit in audits %}
+            <div class="list-row">
+                <div>
+                    <b>{{ audit['brand_name'] }}</b>
+                    <small>{{ audit['platform'] }} · {{ audit['goal'] }}</small>
+                    <small>{{ audit['created_at'][:16].replace('T', ' ') if audit['created_at'] else '' }}</small>
+                </div>
+                <strong>{{ audit['score'] }}/100</strong>
+            </div>
+        {% else %}
+            <div class="empty">No audits yet.</div>
+        {% endfor %}
+    </section>
+
+    <section class="panel">
+        <div class="panel-head">
+            <h2>Brand Pulse History</h2>
+            <a href="{{ url_for('pulse') }}">Run test</a>
+        </div>
+        {% for simulation in simulations %}
+            <div class="list-row">
+                <div>
+                    <b>{{ simulation['platform'] }}</b>
+                    <small>{{ simulation['goal'] }} · {{ simulation['tone'] }}</small>
+                    <small>{{ simulation['idea'] }}</small>
+                </div>
+                <strong>{{ simulation['attention'] }} A</strong>
+            </div>
+        {% else %}
+            <div class="empty">No simulations yet.</div>
+        {% endfor %}
+    </section>
+</div>
+
+<section class="panel history-panel">
+    <div class="panel-head">
+        <h2>Brand DNA History</h2>
+        <a href="{{ url_for('dna') }}">New check</a>
+    </div>
+    {% for item in dna_checks %}
+        <div class="history-card">
+            <div>
+                <b>{{ item['brand_name'] }}</b>
+                <small>{{ item['tone'] }} · {{ item['created_at'][:16].replace('T', ' ') }}</small>
+            </div>
+            <strong>{{ item['score'] }}/100</strong>
+            <p>{{ item['recommendation'] }}</p>
+        </div>
+    {% else %}
+        <p class="empty">Your Brand DNA checks will appear here after you submit one.</p>
+    {% endfor %}
+</section>
+
+<section class="panel history-panel">
+    <div class="panel-head">
+        <h2>Brand Mood History</h2>
+        <a href="{{ url_for('mood') }}">New mood plan</a>
+    </div>
+    {% for item in mood_checks %}
+        <div class="history-card">
+            <div>
+                <b>{{ item['brand_name'] }}</b>
+                <small>{{ item['mood'] }} · {{ item['goal'] }} · {{ item['created_at'][:16].replace('T', ' ') }}</small>
+            </div>
+            <strong>{{ item['score'] }}/100</strong>
+            <p>{{ item['style_direction'] }}</p>
+            <small>{{ item['content_direction'] }}</small>
+        </div>
+    {% else %}
+        <p class="empty">Your Brand Mood results will appear here after you submit one.</p>
+    {% endfor %}
+</section>
+{% endblock %}

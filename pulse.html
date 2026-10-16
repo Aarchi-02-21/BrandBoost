@@ -1,0 +1,57 @@
+{% extends 'base.html' %}{% block title %}Brand Pulse | BrandBoost{% endblock %}{% block content %}<section class="page-head compact">
+    <div class="eyebrow">UNIQUE FEATURE • BRAND PULSE ENGINE</div>
+    <h1>Test your post <span>before you post.</span>
+    </h1>
+<p>A rule-based simulation that estimates attention, trust, conversion and risk from your campaign choices.</p>
+</section>
+<section class="tool-layout">
+    <form class="tool-card" method="post">
+        <label>Platform<select name="platform">
+                <option>Instagram</option>
+                <option>LinkedIn</option>
+                <option>YouTube</option>
+                <option>Facebook</option>
+            </select>
+    </label>
+<label>Tone<select name="tone">
+        <option>Storytelling</option>
+        <option>Educational</option>
+        <option>Bold</option>
+        <option>Professional</option>
+    </select>
+</label>
+<label>Goal<select name="goal">
+        <option>Awareness</option>
+        <option>Leads</option>
+        <option>Sales</option>
+        <option>Engagement</option>
+    </select>
+</label>
+<label>Content idea<textarea name="idea" required placeholder="Write your campaign idea...">
+    </textarea>
+</label>
+<button class="btn full">Run Pulse Simulation ✦</button>
+</form>{% if result %}<div class="result-card">
+<div class="eyebrow">SIMULATED PREVIEW</div>
+<div class="score-grid">
+    <div>
+        <b>{{result.attention}}</b>
+        <small>Attention</small>
+    </div>
+<div>
+    <b>{{result.trust}}</b>
+    <small>Trust</small>
+</div>
+<div>
+    <b>{{result.conversion}}</b>
+    <small>Conversion</small>
+</div>
+<div>
+    <b>{{result.risk}}</b>
+    <small>Risk</small>
+</div>
+</div>
+<h3>Before-you-post advice</h3>
+<p>{{result.recommendation}}</p>
+<p class="muted">Rule-based project simulation, not a guarantee of real-world results.</p>
+</div>{% endif %}</section>{% endblock %}

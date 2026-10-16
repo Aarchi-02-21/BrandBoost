@@ -1,0 +1,16 @@
+{% extends 'base.html' %}{% block title %}Register | BrandBoost{% endblock %}{% block content %}<section class="auth-wrap">
+    <form class="auth-card" method="post">
+        <div class="eyebrow">GET STARTED</div>
+        <h1>Create your <span>brand account.</span>
+        </h1>
+    <label>Full name<input name="name" required placeholder="Your name">
+    </label>
+<label>Email<input type="email" name="email" required placeholder="you@example.com">
+</label>
+<label>Password<input type="password" name="password" minlength="6" required placeholder="Minimum 6 characters">
+</label>
+<button class="btn full">Create Account</button>
+<p class="muted">Already registered? <a href="{{url_for('login')}}">Login</a>
+</p>
+</form>
+</section>{% endblock %}

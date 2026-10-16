@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}BrandBoost | Pricing{% endblock %}
+{% block content %}
+<section class="page-head">
+    <div class="eyebrow">SIMPLE PACKAGES</div>
+    <h1>Choose the right <span>boost.</span></h1>
+    <p>Affordable entry plans with value-added offers instead of loss-making discounts.</p>
+</section>
+
+<section class="pricing-grid">
+    {% for key, p in packages.items() %}
+    <article class="price-card {% if key == 'starter' %}popular{% endif %}">
+        {% if key == 'starter' %}
+        <div class="popular-tag">MOST POPULAR</div>
+        {% endif %}
+        <h3>{{ p['name'] }}</h3>
+        <div class="price">
+            {% if p['price'] == 0 %}
+                Free
+            {% else %}
+                ₹{{ p['price'] }}
+            {% endif %}
+            <small>{% if p['price'] > 0 %}/ plan{% endif %}</small>
+        </div>
+        <p>Designed for practical social media growth.</p>
+        <div class="offer">
+            <b>🎁 Offer included</b>
+            <br>
+            {{ p['offer'] }}
+        </div>
+        <ul>
+            {% for item in p['items'] %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+        {% if key == 'trial' %}
+        <form method="post" action="{{ url_for('trial') }}">
+            <button class="btn full">Claim Free Trial</button>
+        </form>
+        {% else %}
+        <form method="post" action="{{ url_for('order', key=key) }}">
+            <button class="btn full">Choose {{ p['name'] }}</button>
+        </form>
+        {% endif %}
+    </article>
+    {% endfor %}
+</section>
+
+<section class="section mini-note">
+    <h2>Why our offers don't destroy profit</h2>
+    <p>BrandBoost adds digital-value bonuses—audits, templates, ideas and limited strategy time—rather than large cash discounts. Customers receive more perceived value without selling below cost.</p>
+</section>
+{% endblock %}

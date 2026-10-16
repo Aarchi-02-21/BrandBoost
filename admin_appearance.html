@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Edit Website | {{ site_settings['site_name'] }}{% endblock %}
+{% block content %}
+<section class="dashboard-head">
+    <div>
+        <div class="eyebrow">ADMIN CONTROL CENTRE</div>
+        <h1>Automatic Branding <span>& Website Editor</span></h1>
+        <p>Change the website's brand colours and homepage text. Updates are saved in SQLite and apply across the site.</p>
+    </div>
+    <div class="admin-actions">
+        <a class="btn secondary" href="{{ url_for('admin') }}">Back to Admin</a>
+        <a class="btn" href="{{ url_for('home') }}">Preview Website</a>
+    </div>
+</section>
+<section class="admin-two appearance-grid">
+    <div class="panel">
+        <div class="panel-head"><h2>Python Automatic Branding</h2></div>
+        <p>Choose a brand personality. Python selects a coordinated primary and accent colour palette and applies it to the website.</p>
+        <form method="post" class="appearance-form">
+            <input type="hidden" name="action" value="generate">
+            <label for="style_name">Brand personality</label>
+            <select id="style_name" name="style_name" required>
+                {% for style in ['Modern & Creative', 'Luxury & Premium', 'Friendly & Warm', 'Youthful & Energetic', 'Minimal & Calm', 'Bold & Powerful', 'Nature & Wellness', 'Technology & Trust'] %}
+                    <option value="{{ style }}" {% if settings['style_name'] == style %}selected{% endif %}>{{ style }}</option>
+                {% endfor %}
+            </select>
+            <button class="btn" type="submit">Generate & Apply Branding</button>
+        </form>
+        <div class="palette-preview">
+            <div><span style="background: {{ settings['primary_color'] }}"></span><small>Primary {{ settings['primary_color'] }}</small></div>
+            <div><span style="background: {{ settings['accent_color'] }}"></span><small>Accent {{ settings['accent_color'] }}</small></div>
+        </div>
+        <p class="muted-note">This is a rule-based Python palette generator, not an external AI service. You can still customise the colours manually.</p>
+    </div>
+    <div class="panel">
+        <div class="panel-head"><h2>Edit Website Content</h2></div>
+        <form method="post" class="appearance-form">
+            <label for="site_name">Website name</label>
+            <input id="site_name" name="site_name" value="{{ settings['site_name'] }}" maxlength="60" required>
+            <label for="tagline">Footer tagline</label>
+            <input id="tagline" name="tagline" value="{{ settings['tagline'] }}" maxlength="180" required>
+            <label for="hero_title">Homepage headline</label>
+            <input id="hero_title" name="hero_title" value="{{ settings['hero_title'] }}" maxlength="180" required>
+            <label for="hero_text">Homepage description</label>
+            <textarea id="hero_text" name="hero_text" rows="4" maxlength="500" required>{{ settings['hero_text'] }}</textarea>
+            <div class="colour-fields">
+                <div><label for="primary_color">Primary colour</label><input id="primary_color" type="color" name="primary_color" value="{{ settings['primary_color'] }}" required></div>
+                <div><label for="accent_color">Accent colour</label><input id="accent_color" type="color" name="accent_color" value="{{ settings['accent_color'] }}" required></div>
+            </div>
+            <button class="btn" type="submit">Save Website Changes</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

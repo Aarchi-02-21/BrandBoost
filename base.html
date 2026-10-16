@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ site_settings['site_name'] }}{% endblock %}</title>
+    <style> :root { --p: {{ site_settings['primary_color'] }}; --green: {{ site_settings['accent_color'] }}; } </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <a class="brand" href="{{ url_for('home') }}">
+            <span>{{ site_settings['site_name'][:-5] if site_settings['site_name']|length > 5 and site_settings['site_name'][-5:] == 'Boost' else site_settings['site_name'] }}</span>{{ 'Boost' if site_settings['site_name'][-5:] == 'Boost' else '' }}
+        </a>
+
+        <button class="mobile-menu" type="button" onclick="toggleMenu()" aria-label="Toggle navigation">
+            ☰
+        </button>
+
+        <nav id="mainNav">
+            <a href="{{ url_for('home') }}#services">Services</a>
+            <a href="{{ url_for('pricing') }}">Pricing</a>
+            <a href="{{ url_for('home') }}#how">How It Works</a>
+            <a href="{{ url_for('audit') }}">Free Audit</a>
+            <a href="{{ url_for('pulse') }}">Brand Pulse</a>
+            <a href="{{ url_for('dna') }}">Brand DNA</a>
+            <a href="{{ url_for('mood') }}">Brand Mood</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+
+            {% if current_user %}
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+
+                {% if current_user['role'] == 'admin' %}
+                    <a href="{{ url_for('admin') }}">Admin</a>
+                    <a href="{{ url_for('admin_data') }}">All Data</a>
+                    <a href="{{ url_for('admin_appearance') }}">Edit Website</a>
+                {% endif %}
+
+                <a class="nav-btn" href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a class="nav-btn ghost" href="{{ url_for('login') }}">Login</a>
+                <a class="nav-btn" href="{{ url_for('register') }}">Get Started</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-wrap">
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">
+                        <span>{{ message }}</span>
+                        <button type="button" onclick="this.parentElement.remove()" aria-label="Dismiss message">×</button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div>
+            <a class="brand" href="{{ url_for('home') }}">
+                <span>{{ site_settings['site_name'][:-5] if site_settings['site_name']|length > 5 and site_settings['site_name'][-5:] == 'Boost' else site_settings['site_name'] }}</span>{{ 'Boost' if site_settings['site_name'][-5:] == 'Boost' else '' }}
+            </a>
+            <p>{{ site_settings['tagline'] }}</p>
+        </div>
+
+        <div>
+            <h4>Explore</h4>
+            <a href="{{ url_for('pricing') }}">Packages</a>
+            <a href="{{ url_for('audit') }}">Free Audit</a>
+            <a href="{{ url_for('pulse') }}">Brand Pulse</a>
+            <a href="{{ url_for('dna') }}">Brand DNA</a>
+            <a href="{{ url_for('mood') }}">Brand Mood</a>
+        </div>
+
+        <div>
+            <h4>Support</h4>
+            <a href="{{ url_for('contact') }}">Contact</a>
+            <a href="{{ url_for('login') }}">Customer Login</a>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}{% block title %}Login | BrandBoost{% endblock %}{% block content %}<section class="auth-wrap">
+    <form class="auth-card" method="post">
+        <div class="eyebrow">WELCOME BACK</div>
+        <h1>Login to <span>BrandBoost.</span>
+        </h1>
+    <label>Email<input type="email" name="email" required placeholder="you@example.com">
+    </label>
+<label>Password<input type="password" name="password" required placeholder="••••••••">
+</label>
+<button class="btn full">Login</button>
+<p class="muted">New here? <a href="{{url_for('register')}}">Create an account</a>
+</p>
+<div class="demo-box">
+    <b>College demo admin</b>
+    <br>admin@brandboost.local<br>admin123</div>
+</form>
+</section>{% endblock %}

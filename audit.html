@@ -1,0 +1,45 @@
+{% extends 'base.html' %}{% block title %}Free Brand Audit | BrandBoost{% endblock %}{% block content %}<section class="page-head compact">
+    <div class="eyebrow">FREE TOOL</div>
+    <h1>Quick <span>Brand Audit.</span>
+    </h1>
+<p>Get an instant starter score before choosing a package.</p>
+</section>
+<section class="tool-layout">
+    <form class="tool-card" method="post">
+        <label>Brand / business name<input name="brand_name" required placeholder="e.g. Green Heaven">
+        </label>
+    <label>Main platform<select name="platform" required>
+            <option value="">Select</option>
+            <option>Instagram</option>
+            <option>LinkedIn</option>
+            <option>YouTube</option>
+            <option>Facebook</option>
+        </select>
+</label>
+<label>Main goal<select name="goal" required>
+        <option value="">Select</option>
+        <option>Awareness</option>
+        <option>Leads</option>
+        <option>Sales</option>
+        <option>Community</option>
+    </select>
+</label>
+<label>Target audience<input name="audience" required placeholder="Who do you want to reach?">
+</label>
+<label>Current presence<select name="presence" required>
+        <option value="">Select</option>
+        <option>Consistent</option>
+        <option>Inconsistent</option>
+        <option>Very new</option>
+    </select>
+</label>
+<button class="btn full">Generate Free Audit</button>
+</form>{% if result %}<div class="result-card">
+<div class="eyebrow">AUDIT RESULT</div>
+<h2>{{result.brand}}</h2>
+<div class="score-ring">{{result.score}}<small>/100</small>
+</div>
+<h3>Starter recommendation</h3>
+<p>{{result.recommendation}}</p>
+<a class="btn" href="{{url_for('pricing')}}">See Packages →</a>
+</div>{% endif %}</section>{% endblock %}

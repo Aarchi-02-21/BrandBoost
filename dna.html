@@ -1,0 +1,34 @@
+{% extends 'base.html' %}{% block title %}Brand DNA | BrandBoost{% endblock %}{% block content %}<section class="page-head compact">
+    <div class="eyebrow">UNIQUE FEATURE • BRAND DNA</div>
+    <h1>Will this post still <span>sound like you?</span>
+    </h1>
+<p>Check whether a campaign idea matches your brand tone, colors and keywords.</p>
+</section>
+<section class="tool-layout">
+    <form class="tool-card" method="post">
+        <label>Brand name<input name="brand_name" required>
+        </label>
+    <label>Brand tone<select name="tone">
+            <option>Professional</option>
+            <option>Friendly</option>
+            <option>Bold</option>
+            <option>Minimal</option>
+            <option>Playful</option>
+        </select>
+</label>
+<label>Brand colors<input name="colors" required placeholder="Purple, white, black">
+</label>
+<label>Brand keywords<input name="keywords" required placeholder="affordable, creative, trusted">
+</label>
+<label>New campaign idea<textarea name="idea" required>
+    </textarea>
+</label>
+<button class="btn full">Check Brand DNA ◎</button>
+</form>{% if result %}<div class="result-card">
+<div class="eyebrow">DNA MATCH</div>
+<div class="score-ring">{{result.score}}<small>/100</small>
+</div>
+<h3>Brand consistency</h3>
+<p>{{result.recommendation}}</p>
+<a class="btn" href="{{url_for('pulse')}}">Test this idea in Pulse →</a>
+</div>{% endif %}</section>{% endblock %}

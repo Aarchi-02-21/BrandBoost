@@ -1,0 +1,153 @@
+{% extends 'base.html' %}{% block title %}BrandBoost | Social Media Branding{% endblock %}{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <div class="eyebrow">SOCIAL MEDIA BRANDING • DIGITAL SALES</div>
+        <h1>{{ site_settings['hero_title'] }}</h1>
+        <p>{{ site_settings['hero_text'] }}</p>
+        <div class="actions">
+            <a class="btn" href="{{url_for('audit')}}">Get Free Audit</a>
+            <a class="btn secondary" href="#services">Explore Services →</a>
+        </div>
+    <div class="trust-row">
+        <span>✦ Affordable</span>
+        <span>✦ Student-focused</span>
+        <span>✦ Performance-driven</span>
+    </div>
+</div>
+<div class="growth-card">
+    <div class="card-top">
+        <b>Brand Growth</b>
+        <span class="status">● Growing</span>
+    </div>
+<div class="growth-number">+78%</div>
+<p>Visibility Growth</p>
+<div class="bars">
+    <i>
+    </i>
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+</div>
+<div class="metrics">
+    <div>
+        <b>12.4K</b>
+        <small>Reach</small>
+    </div>
+<div>
+    <b>1.8K</b>
+    <small>Engagement</small>
+</div>
+<div>
+    <b>126</b>
+    <small>Leads</small>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="services">
+    <div class="section-heading">
+        <div class="eyebrow">WHAT WE DO</div>
+        <h2>Everything your brand needs to look <span>ready.</span>
+        </h2>
+    <p>One simple place for strategy, content and customer communication.</p>
+</div>
+<div class="grid-3">
+    <article class="feature-card">
+        <div class="icon">◈</div>
+        <h3>Social Identity</h3>
+        <p>Profile optimization, visual direction, bio and content pillars that make your brand recognizable.</p>
+        <a href="{{url_for('pricing')}}">View packages →</a>
+    </article>
+<article class="feature-card">
+    <div class="icon">✦</div>
+    <h3>Content Strategy</h3>
+    <p>Practical content ideas, captions and campaign planning designed around your target audience.</p>
+    <a href="{{url_for('audit')}}">Start audit →</a>
+</article>
+<article class="feature-card">
+    <div class="icon">◎</div>
+    <h3>Lead Growth</h3>
+    <p>Conversion-focused CTAs and simple digital sales journeys for small businesses.</p>
+    <a href="{{url_for('contact')}}">Talk to us →</a>
+</article>
+</div>
+</section>
+<section class="section tinted" id="how">
+    <div class="section-heading">
+        <div class="eyebrow">HOW IT WORKS</div>
+        <h2>From idea to <span>brand growth.</span>
+        </h2>
+</div>
+<div class="steps">
+    <div>
+        <b>01</b>
+        <h3>Tell us your brand</h3>
+        <p>Choose your goal, audience and current social presence.</p>
+    </div>
+<div>
+    <b>02</b>
+    <h3>Get a strategy</h3>
+    <p>Turn your information into practical branding actions.</p>
+</div>
+<div>
+    <b>03</b>
+    <h3>Build & publish</h3>
+    <p>Use your content plan and keep your identity consistent.</p>
+</div>
+<div>
+    <b>04</b>
+    <h3>Measure & improve</h3>
+    <p>Use Brand Pulse and Brand DNA before campaigns.</p>
+</div>
+</div>
+</section>
+<section class="section">
+    <div class="section-heading">
+        <div class="eyebrow">OUR DIFFERENCE</div>
+        <h2>Tools that normal branding sites <span>don't give you.</span>
+        </h2>
+</div>
+<div class="grid-3">
+    <article class="unique-card">
+        <span class="badge">NEW</span>
+        <h3>Brand Pulse Simulator</h3>
+        <p>Test a content idea before publishing. It simulates attention, trust, conversion and risk so you can improve the post first.</p>
+        <a href="{{url_for('pulse')}}">Try Brand Pulse →</a>
+    </article>
+<article class="unique-card">
+    <span class="badge">NEW</span>
+    <h3>Brand DNA Check</h3>
+    <p>Check whether a new idea still sounds like the same brand using tone, colors and keywords.</p>
+    <a href="{{url_for('dna')}}">Check Brand DNA →</a>
+</article>
+<article class="unique-card">
+    <span class="badge">NEW</span>
+    <h3>Brand Mood Studio</h3>
+    <p>Choose the personality your brand should communicate and turn it into a practical visual and content direction.</p>
+    <a href="{{url_for('mood')}}">Create brand mood →</a>
+</article>
+<article class="unique-card">
+    <span class="badge">SMART</span>
+    <h3>Offer-Value Bundles</h3>
+    <p>Instead of risky cash discounts, customers receive low-cost digital bonuses such as audits, ideas and strategy time.</p>
+    <a href="{{url_for('pricing')}}">See offers →</a>
+</article>
+</div>
+</section>
+<section class="cta">
+    <div>
+        <div class="eyebrow">READY TO START?</div>
+        <h2>Get your free brand audit today.</h2>
+        <p>No payment required for the audit.</p>
+    </div>
+<a class="btn light" href="{{url_for('audit')}}">Start Free Audit →</a>
+</section>{% endblock %}

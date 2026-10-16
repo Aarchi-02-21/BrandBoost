@@ -1,0 +1,80 @@
+{% extends 'base.html' %}{% block title %}Admin | BrandBoost{% endblock %}{% block content %}<section class="dashboard-head">
+    <div>
+        <div class="eyebrow">ADMIN DASHBOARD</div>
+        <h1>Manage <span>BrandBoost.</span>
+        </h1>
+    <p>Users, orders and customer communication.</p>
+</div>
+<div class="admin-actions"><a class="btn secondary" href="{{ url_for('admin_data') }}">View All Saved Data</a><a class="btn secondary" href="{{ url_for('admin_appearance') }}">Edit Website Appearance</a><a class="btn" href="{{ url_for('home') }}">View Website</a></div>
+</section>
+<div class="admin-stats">
+    <div>
+        <small>Customers</small>
+        <b>{{stats.users}}</b>
+    </div>
+<div>
+    <small>Orders</small>
+    <b>{{stats.orders}}</b>
+</div>
+<div>
+    <small>Verified Revenue</small>
+    <b>₹{{stats.revenue}}</b>
+</div>
+<div>
+    <small>Messages / Leads</small>
+    <b>{{stats.leads}}</b>
+</div>
+<div>
+    <small>Saved Audits</small>
+    <b>{{ stats.audits }}</b>
+</div>
+<div>
+    <small>Pulse Tests</small>
+    <b>{{ stats.simulations }}</b>
+</div>
+<div>
+    <small>DNA / Mood Checks</small>
+    <b>{{ stats.dna_checks + stats.mood_checks }}</b>
+</div>
+<div>
+    <small>Demo Orders (unpaid)</small>
+    <b>{{ stats.demo_orders }}</b>
+</div>
+</div>
+<section class="panel admin-panel">
+    <div class="panel-head">
+        <h2>Customer Messages</h2>
+    </div>{% for c in chats %}<div class="admin-chat">
+    <div>
+        <b>{{c['name']}}</b> · {{c['email']}} <span class="pill">{{c['status']}}</span>
+        <small>{{c['created_at'][:16].replace('T',' ')}}</small>
+    </div>
+<p>{{c['message']}}</p>
+<form method="post" action="{{url_for('admin_reply',cid=c['id'])}}">
+    <input name="reply" value="{{c['reply'] or ''}}" placeholder="Type a reply...">
+    <button class="btn small">Save Reply</button>
+</form>
+</div>{% else %}<div class="empty">No customer messages.</div>{% endfor %}</section>
+<section class="admin-two">
+    <section class="panel">
+        <div class="panel-head">
+            <h2>Recent Orders</h2>
+        </div>{% for o in orders %}<div class="list-row">
+        <div>
+            <b>{{o['package_name']}}</b>
+            <small>{{o['name']}} · {{o['email']}}</small>
+        </div>
+    <strong>₹{{o['amount']}}</strong>
+</div>{% else %}<div class="empty">No orders.</div>{% endfor %}</section>
+<section class="panel">
+    <div class="panel-head">
+        <h2>Registered Users</h2>
+    </div>{% for u in users %}<div class="list-row">
+    <div>
+        <b>{{u['name']}}</b>
+        <small>{{u['email']}}</small>
+        <small>Joined: {{ u['created_at'][:10] if u['created_at'] else '—' }}</small>
+    </div>
+<span class="pill">{{u['role']}}</span>
+</div>{% endfor %}</section>
+</section>{% endblock %}

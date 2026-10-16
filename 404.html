@@ -1,0 +1,7 @@
+{% extends 'base.html' %}{% block title %}Not Found | BrandBoost{% endblock %}{% block content %}<section class="page-head">
+    <div class="eyebrow">404</div>
+    <h1>That page <span>doesn't exist.</span>
+    </h1>
+<p>Let's get you back to BrandBoost.</p>
+<a class="btn" href="{{url_for('home')}}">Back Home</a>
+</section>{% endblock %}
