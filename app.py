@@ -12,7 +12,11 @@ try:
 except ImportError:
     razorpay = None
 BASE_DIR = Path(__file__).resolve().parent
-DB_PATH = BASE_DIR / 'brandboost.db'
+
+if os.environ.get("VERCEL"):
+    DB_PATH = Path("/tmp/brandboost.db")
+else:
+    DB_PATH = BASE_DIR / "brandboost.db"
 app = Flask(__name__)
 app.secret_key = os.environ.get('BRANDBOOST_SECRET_KEY', 'change-this-secret-before-deployment')
 RAZORPAY_KEY_ID = os.environ.get('RAZORPAY_KEY_ID', '')
